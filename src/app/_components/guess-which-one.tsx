@@ -14,15 +14,15 @@ export function GuessWhichOne() {
     const queryTwo = usePokemonQuery(pokemonIds[1]!);
     const firstOneIsTheOne = Math.round(Math.random()) === 0;
 
-    const handleAnswer = (isCorrect: boolean) => {
+    const handleAnswer = (isCorrect: boolean, name: string) => {
         if (isCorrect) {
             setStreak((value) => {
                 return value + 1;
             });
             toast.success(
                 <div className="flex w-full flex-row justify-center">
-                    <h1 className="text-center text-2xl">
-                        🎉 That is correct!
+                    <h1 className="text-center text-xl">
+                        🎉 That is correct, this is {name}!
                     </h1>
                 </div>
             );
@@ -30,8 +30,8 @@ export function GuessWhichOne() {
             setStreak(0);
             toast.error(
                 <div className="flex w-full flex-row justify-center">
-                    <h1 className="text-center text-2xl">
-                        🫣 That is incorrect, try again!
+                    <h1 className="text-center text-xl">
+                        🫣 That was {name}, try again!
                     </h1>
                 </div>
             );
@@ -66,14 +66,24 @@ export function GuessWhichOne() {
                     {queryOne.isSuccess && queryTwo.isSuccess ? (
                         <>
                             <button
-                                onClick={() => handleAnswer(firstOneIsTheOne)}
+                                onClick={() =>
+                                    handleAnswer(
+                                        firstOneIsTheOne,
+                                        capitalizeString(queryOne.data.name)
+                                    )
+                                }
                             >
                                 <Pokemon
                                     imgUrl={queryOne.data.sprites.front_default}
                                 />
                             </button>
                             <button
-                                onClick={() => handleAnswer(!firstOneIsTheOne)}
+                                onClick={() =>
+                                    handleAnswer(
+                                        !firstOneIsTheOne,
+                                        capitalizeString(queryTwo.data.name)
+                                    )
+                                }
                             >
                                 <Pokemon
                                     imgUrl={queryTwo.data.sprites.front_default}
