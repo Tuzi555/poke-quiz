@@ -5,6 +5,7 @@ import { type Metadata } from "next";
 import Providers from "./providers";
 import { ThemeProvider } from "~/components/theme-provider";
 import { Toaster } from "~/components/ui/sonner";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
     title: "Poké Quiz",
@@ -33,6 +34,7 @@ export default function RootLayout({
                         <Toaster position="bottom-center" richColors />
                     </ThemeProvider>
                 </Providers>
+                <SpeedInsights />
             </body>
         </html>
     );
